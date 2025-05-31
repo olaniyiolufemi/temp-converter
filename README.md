@@ -2,8 +2,6 @@ Temperature Converter App
 Overview
 The Temperature Converter is a Flutter mobile application that allows users to convert between Fahrenheit and Celsius temperature scales. The app features a responsive design that adapts to both portrait and landscape orientations, maintains a history of conversions, and provides precise calculations using standard temperature conversion formulas.
 
-App Screenshot
-
 Key Features
 Dual Conversion Modes: Fahrenheit to Celsius and Celsius to Fahrenheit
 
@@ -134,7 +132,7 @@ Installation
 Clone the repository:
 
 bash
-git clone https://github.com/yourusername/temperature-converter-flutter.git
+git clone (https://github.com/olaniyiolufemi/temp-converter/)
 Install dependencies:
 
 bash
