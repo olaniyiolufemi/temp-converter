@@ -1,40 +1,42 @@
-Temperature Converter App
-Overview
-The Temperature Converter is a Flutter mobile application that allows users to convert between Fahrenheit and Celsius temperature scales. The app features a responsive design that adapts to both portrait and landscape orientations, maintains a history of conversions, and provides precise calculations using standard temperature conversion formulas.
+# Temperature Converter App
 
-Key Features
-Dual Conversion Modes: Fahrenheit to Celsius and Celsius to Fahrenheit
+## Overview
+The Temperature Converter is a responsive Flutter application that allows users to convert between Fahrenheit and Celsius temperature scales. The app features dual-orientation support (portrait and landscape), maintains a history of conversions, and provides precise calculations using standard conversion formulas.
 
-Precise Calculations: Uses standard conversion formulas with 2-decimal precision
+## Features
+- **Dual Conversion Modes**: Fahrenheit ↔ Celsius
+- **Precise Calculations**: 2-decimal place accuracy
+- **Conversion History**: Session-based history tracking
+- **Responsive Design**: Optimized layouts for portrait/landscape
+- **Intuitive UI**: Clean Material Design interface
+- **Input Validation**: Handles invalid entries gracefully
 
-Conversion History: Maintains session history with most recent conversions first
+## Technical Architecture
 
-Responsive Design: Optimized layouts for portrait and landscape orientations
-
-Intuitive UI: Clean Material Design interface with clear visual hierarchy
-
-Technical Architecture
-Core Components
+### Component Structure
+```
 lib/
 └── main.dart
-    ├── TemperatureConverterApp (StatelessWidget)
-    └── ConverterScreen (StatefulWidget)
-        ├── _ConverterScreenState
+    ├── TemperatureConverterApp (Root widget)
+    └── ConverterScreen (Main screen)
+        ├── _ConverterScreenState (State class)
         │   ├── _convert() - Conversion logic
-        │   ├── _buildConversionSelector() - Radio buttons
-        │   ├── _buildInputField() - Temperature input
-        │   ├── _buildHistoryList() - Conversion history
-        │   ├── _buildPortraitLayout() - Vertical layout
-        │   └── _buildLandscapeLayout() - Horizontal layout
-        └── HistoryItem (Data Model)
-Dependencies
-Flutter SDK (minimum 3.0.0)
+        │   ├── _buildConversionSelector()
+        │   ├── _buildInputField()
+        │   ├── _buildHistoryList()
+        │   ├── _buildPortraitLayout()
+        │   └── _buildLandscapeLayout()
+        └── HistoryItem (Data model)
+```
 
-Material Design widgets (included in Flutter)
+### Dependencies
+- Flutter SDK (minimum 3.0.0)
+- Material Design widgets (included in Flutter)
 
-Critical Components
-1. Conversion Logic (_convert method)
-dart
+## Critical Components
+
+### 1. Conversion Logic
+```dart
 void _convert() {
   final input = double.tryParse(_inputController.text);
   if (input == null) return;
@@ -52,16 +54,14 @@ void _convert() {
     ));
   });
 }
-Validates numeric input
+```
+- Validates numeric input
+- Applies precise conversion formulas
+- Maintains history with most recent first
+- Updates UI with formatted result
 
-Applies correct conversion formula based on selection
-
-Updates result with 2-decimal precision
-
-Adds conversion to history (most recent first)
-
-2. Responsive Layout (OrientationBuilder)
-dart
+### 2. Responsive Layout
+```dart
 OrientationBuilder(
   builder: (context, orientation) {
     return orientation == Orientation.portrait
@@ -69,14 +69,13 @@ OrientationBuilder(
         : _buildLandscapeLayout();
   },
 )
-Dynamically switches between layouts
+```
+- **Portrait**: Vertical column layout
+- **Landscape**: Horizontal split-screen layout
+- Automatically adapts to device orientation
 
-Portrait: Vertical column layout
-
-Landscape: Horizontal split-screen layout
-
-3. History Management
-dart
+### 3. History Management
+```dart
 class HistoryItem {
   final ConversionType type;
   final double input;
@@ -84,9 +83,6 @@ class HistoryItem {
 
   HistoryItem({required this.type, required this.input, required this.result});
 }
-
-// In State class
-final List<HistoryItem> _history = [];
 
 // In build method
 ListView.builder(
@@ -101,138 +97,78 @@ ListView.builder(
     );
   },
 )
-HistoryItem model stores conversion data
+```
+- Structured data model for history items
+- Efficient ListView rendering
+- Most recent conversions at top
 
-ListView.builder efficiently renders history
+## Getting Started
 
-Most recent conversions appear at top of list
+### Prerequisites
+- Flutter SDK (v3.0+)
+- Dart SDK (v2.17+)
+- Android Studio/Xcode (for emulators)
 
-4. User Interface Components
-Radio Buttons: For conversion type selection
+### Installation
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/olaniyiolufemi/temp-converter/
+   ```
+2. Install dependencies:
+   ```bash
+   flutter pub get
+   ```
+3. Run the app:
+   ```bash
+   flutter run
+   ```
 
-TextField: For temperature input with numeric keyboard
+## Usage Guide
+1. **Select conversion type** using radio buttons
+2. **Enter temperature** in the input field
+3. Press **Convert** to calculate
+4. View **result** below the button
+5. **History** updates automatically
+6. **Rotate device** to switch layouts
 
-ElevatedButton: Triggers conversion
+## Testing
+Manual test cases include:
+1. Conversion accuracy:
+   - 32°F → 0°C
+   - 0°C → 32°F
+   - 100°C → 212°F
+   - 212°F → 100°C
+2. History tracking
+3. Orientation responsiveness
+4. Input validation
+5. UI consistency
 
-ListView: Displays scrollable history
+## Technical Decisions
+1. **State Management**: Uses `setState` for simplicity
+2. **Responsive Design**: `OrientationBuilder` for layout switching
+3. **Data Modeling**: Dedicated `HistoryItem` class
+4. **Input Handling**: Numeric keyboard with validation
+5. **Precision**: `toStringAsFixed(2)` for decimal formatting
 
-VerticalDivider: Separates sections in landscape mode
+## Future Enhancements
+1. Add Kelvin conversion
+2. Implement history persistence
+3. Theme customization
+4. Unit conversion toggles
+5. Additional temperature scales
 
-SizedBox/Spacers: Provides consistent spacing
-
-Getting Started
-Prerequisites
-Flutter SDK (v3.0 or higher)
-
-Dart SDK (v2.17 or higher)
-
-Android Studio/Xcode (for emulators)
-
-Installation
-Clone the repository:
-
-bash
-git clone (https://github.com/olaniyiolufemi/temp-converter/)
-Install dependencies:
-
-bash
-flutter pub get
-Run the app:
-
-bash
-flutter run
-Building for Production
-Android APK:
-
-bash
-flutter build apk --release
-iOS App Bundle:
-
-bash
-flutter build ios --release
-Usage Guide
-Select Conversion Type:
-
-Choose between "Fahrenheit to Celsius" or "Celsius to Fahrenheit"
-
-Enter Temperature:
-
-Input a numeric value in the text field
-
-The suffix shows the current input unit (°F or °C)
-
-Convert:
-
-Press the "Convert" button to calculate
-
-Result appears below the button
-
-View History:
-
-Previous conversions appear in the history section
-
-Most recent conversion at the top
-
-Rotate Device:
-
-App automatically adjusts layout for portrait/landscape
-
-Testing
-The app includes manual testing procedures for:
-
-Conversion accuracy (known values)
-
-History tracking functionality
-
-Orientation responsiveness
-
-Input validation
-
-UI consistency across orientations
-
-Test cases include:
-
-32°F → 0°C
-
-0°C → 32°F
-
-100°C → 212°F
-
-212°F → 100°C
-
-Invalid input handling
-
-History ordering
-
-Technical Decisions
-State Management: Uses setState for simplicity given the app's scope
-
-Responsive Design: OrientationBuilder for layout switching
-
-Data Modeling: HistoryItem class for structured data storage
-
-Input Handling: TextInputType.number with input validation
-
-Precision: toStringAsFixed(2) for consistent decimal display
-
-Future Enhancements
-Add temperature unit toggles
-
-Implement history persistence
-
-Add theme customization
-
-Incorporate additional conversion units (Kelvin)
-
-Add unit tests
-
-Contribution Guidelines
-Fork the repository
-
-Create a feature branch (git checkout -b feature/improvement)
-
-Commit changes (git commit -m 'Add some feature')
-
-Push to branch (git push origin feature/improvement)
-
-Open a pull request
+## Contributing
+1. Fork the repository
+2. Create your feature branch:
+   ```bash
+   git checkout -b feature/improvement
+   ```
+3. Commit your changes:
+   ```bash
+   git commit -m 'Add some feature'
+   ```
+4. Push to the branch:
+   ```bash
+   git push origin feature/improvement
+   ```
+5. Open a pull request
